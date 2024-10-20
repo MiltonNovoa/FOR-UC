@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    background: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGW3HxP0BblWS9HFthI9s5DQVFzLbFsvpir86dDq7sDClEV2vTes6Hz5hDJrKp4cLmKJd_hkBgK3Pe0HHguvrf-cK4Mb7_jXx4sB1YFpxYQxqpUPSTem1SQbi0IxJioslEY3yd_WnOTGi3EhAXhtD_OCBVolZRqGLbhE3kQfWDwd9HvO2Ywe5zcpggrOk/s16000/Finanzauto.png) no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.Texto {
+    flex: 1;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    padding-left: 350px;
+    padding-right: 100px;
+}
+
+.Texto h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.Texto p {
+    font-size: 1.2rem;
+    padding-left: 90px;
+}
+
+.Contenedor {
+    position: relative;
+    width: 400px;
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    height: 450 px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    margin: 30PX;
+}
+
+.Contenedor h2 {
+    font-size: 2.3rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.formulario {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.input-contenedor {
+    position: relative;
+    margin: 30px 0;
+    width: 300px;
+    border-bottom: 2px solid #fff;
+}
+
+.input-contenedor label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: .6s;
+    font-weight: bold;
+}
+
+input:focus~label,
+input:valid~label {
+    top: -5px;
+}
+
+.input-contenedor input {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: - 35px 0 5px;
+    color: #000000;
+}
+
+.input-contenedor i {
+    position: absolute;
+    color: #fff;
+    font-size: 1.6rem;
+    top: 19px;
+    right: 8px;
+}
+
+.Olvidar {
+    margin: -15px 0 15px;
+    font-size: .9em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+
+}
+
+.Olvidar label input {
+    margin: 3px;
+}
+
+.Olvidar label a {
+    color: #fff;
+    text-decoration: none;
+    transition: .3s;
+    font-size: .9em;
+}
+
+.input-contenedor label a:hover {
+    text-decoration: underline;
+}
+
+button {
+    width: 100%;
+    height: 45px;
+    border-radius: 40px;
+    background: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #007bff;
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+button:active {
+    background: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transform: scale(0.98);
+}
+
+
+.Registrarse {
+    font-size: .8rem;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0 10px;
+}
+
+.Registrarse p a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.Registrarse p a:hover {
+    text-decoration: underline;
+}

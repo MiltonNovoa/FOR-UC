@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    background: url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGW3HxP0BblWS9HFthI9s5DQVFzLbFsvpir86dDq7sDClEV2vTes6Hz5hDJrKp4cLmKJd_hkBgK3Pe0HHguvrf-cK4Mb7_jXx4sB1YFpxYQxqpUPSTem1SQbi0IxJioslEY3yd_WnOTGi3EhAXhtD_OCBVolZRqGLbhE3kQfWDwd9HvO2Ywe5zcpggrOk/s16000/Finanzauto.png) no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.ContenedorRegistro {
+    flex: auto;
+    position: relative;
+    max-width: 1000px;
+    border: 2px solid rgba(255, 255, 255, .6);
+    border-radius: 40px;
+    backdrop-filter: blur(15px);
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ContenedorRegistro h2 {
+    font-size: 2.3rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ContenedorRegistro p {
+    font-size: 1rem;
+    color: #fff;
+    padding-left: 5px;
+}
+
+.formulario {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px;
+}
+
+.columna {
+    flex: 0 0 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-contenedor {
+    position: relative;
+    width: 100%;
+    border-bottom: 2px solid #fff;
+}
+
+.input-contenedor label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: .6s;
+    font-weight: bold;
+}
+
+input:focus~label,
+input:valid~label {
+    top: 10px;
+}
+
+.input-contenedor input {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 10px 5px;
+    color: #000000;
+}
+
+.input-contenedor i {
+    position: absolute;
+    color: #fff;
+    font-size: 1.6rem;
+    top: 19px;
+    right: 8px;
+}
+
+button {
+    width: 200px; 
+    height: 50px;
+    margin: 0 auto 20px; 
+    border-radius: 40px;
+    background: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    line-height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:hover {
+    background: #007bff;
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+button:active {
+    background: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transform: scale(0.98);
+}
+
+.iniciarSesion {
+    font-size: .8rem;
+    color: #fff;
+    text-align: center;
+    margin: 20px 0 10px;
+}
+
+.iniciarSesion p a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.iniciarSesion p a:hover {
+    text-decoration: underline;
+}
