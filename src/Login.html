@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/f7074da23b.js" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/CSS/Login.css">
+    <title>Log-in</title>
+</head>
+
+<body>
+    <section>
+        <div class="Texto">
+            <h2>Tú universidad fuera del aula</h2>
+            <p>FOR - UC: Donde tus ideas encuentran su voz.</p>
+        </div>
+        <div class="Contenedor">
+            <div class="Formulario">
+                <form id="loginForm" action="#" method="POST">
+                    <h2>Iniciar Sesión</h2>
+
+                    <div class="input-contenedor">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username" required>
+                        <label for="username">Nombre de Usuario</label>
+                    </div>
+                    <div class="input-contenedor">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" required>
+                        <label for="password">Contraseña</label>
+                    </div>
+                    <button type="submit">Acceder</button>
+                    <div class="Registrarse">
+                        <p><a href="/src/Registro.html">¿No tienes cuenta? <u> Regístrate </u></a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Evita el envío predeterminado del formulario
+
+            // Obtiene los valores del formulario
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Crea el objeto de datos para enviar
+            const data = {
+                username: username,
+                password: password
+            };
+
+            try {
+                const response = await fetch('https://localhost:7230/api/Login/Login', {
+                    method: 'POST', // Método HTTP
+                    headers: {
+                        'Content-Type': 'application/json' // Tipo de contenido
+                    },
+                    body: JSON.stringify(data) // Convierte el objeto a JSON
+                });
+
+                // Maneja la respuesta
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Inicio de sesión exitoso:', result);
+                    alert('Inicio de sesión exitoso!');
+                    localStorage.setItem('currentUser', result.username);
+                    window.location.href = '/src/index.html'; // Ruta relativa a la página principal
+                } else {
+                    const error = await response.json();
+                    console.error('Error en el inicio de sesión:', error);
+                    alert('Credenciales incorrectas. Intenta de nuevo.');
+                }
+            } catch (error) {
+                console.error('Error al conectar con el servidor:', error);
+                alert('Hubo un problema al intentar iniciar sesión.');
+            }
+        });
+    </script>
+</body>
+
+</html>

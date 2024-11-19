@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOR-UC</title>
+    <link rel="stylesheet" href="/src/CSS/index.css">
+</head>
+
+<body>
+    <header>
+        <div id="header-text">
+            <h1>FOR-UC</h1>
+        </div>
+        <div id="search-bar">
+            <input type="text" placeholder="Buscar" class="search-bar">
+        </div>
+        <div id="header-img">
+            <button class="nav-button" id="createPostBtn" onclick="toggleModal('createPostModal')">
+                <img src="/public/IMG/new-post-48.png" alt="new post">
+            </button>
+            <a href="/src/Login.html">
+                <img src="/public/IMG/usuario-50.png" alt="User">
+            </a>
+        </div>
+        <div id="currentUser">
+            <span>Usuario: ${currentUser}</span>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <aside class="sidebar">
+            <a href="#" class="sidebar-item">🏠 Home</a>
+            <hr style="border-color: #343536;">
+            <h4 style="color: #818384; font-size: 12px;">COMUNIDADES</h4>
+            <a href="#" class="sidebar-item" id="createCommunityBtn" onclick="toggleModal('createCommunityModal')">+ Crear una comunidad</a>
+            <div id="communityList"></div> <!-- Contenedor para las comunidades -->
+        </aside>
+
+        <main class="content" id="mainContent">
+        </main>
+    </div>
+
+    <!-- Modales de publicación y comunidad -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="toggleModal('createPostModal')">&times;</span>
+            <h2>Subir una publicación</h2>
+            <form id="createPostForm">
+                <input type="text" id="postTitle" placeholder="Título" required>
+                <textarea id="postContent" placeholder="Contenido" required></textarea>
+                <input type="text" id="postImage" placeholder="URL de imagen (opcional)">
+                <button type="submit">Publicar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="createCommunityModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="toggleModal('createCommunityModal')">&times;</span>
+            <h2>Crear una comunidad</h2>
+            <form id="createCommunityForm">
+                <input type="text" id="communityName" placeholder="Nombre de la comunidad" required>
+                <textarea id="communityDescription" placeholder="Descripción" required></textarea>
+                <button type="submit">Crear comunidad</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <p>Authors: Juan Fernando Orjuela | Milton Andres Novoa Gutierrez | Maria Fernanda Sierra Serna</p>
+        <p>©2024</p>
+    </footer>
+
+    <script>
+        // Variables para datos
+        let posts = JSON.parse(localStorage.getItem('posts')) || [];
+        let communities = JSON.parse(localStorage.getItem('communities')) || [];
+        let currentUser = localStorage.getItem('currentUser') || 'Anonymous';
+
+        function saveData() {
+            localStorage.setItem('posts', JSON.stringify(posts));
+            localStorage.setItem('communities', JSON.stringify(communities));
+        }
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = modal.style.display === 'none' || modal.style.display === '' ? 'block' : 'none';
+        }
+
+        // Crear publicación
+        function createPost(title, content, imageUrl) {
+            const newPost = {
+                id: Date.now(),
+                title,
+                content,
+                imageUrl,
+                community: 'General', // Ajustar comunidad predeterminada
+                author: currentUser,
+                votes: 0,
+                comments: [],
+                createdAt: new Date().toISOString()
+            };
+            posts.unshift(newPost);
+            saveData();
+            renderPosts();
+        }
+
+        // Crear comunidad y añadirla a la barra lateral
+        function createCommunity(name, description) {
+            const newCommunity = {
+                id: Date.now(),
+                name,
+                description,
+                createdAt: new Date().toISOString(),
+                creator: currentUser
+            };
+            communities.push(newCommunity);
+            saveData();
+            renderCommunities();
+        }
+
+        // Añadir comentarios
+        function addComment(postId, content) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                post.comments.push({
+                    id: Date.now(),
+                    content,
+                    author: currentUser,
+                    createdAt: new Date().toISOString()
+                });
+                saveData();
+                renderPosts();
+            }
+        }
+
+        // Votar publicación
+        function vote(postId, value) {
+            const post = posts.find(p => p.id === postId);
+            if (post) {
+                post.votes += value;
+                saveData();
+                renderPosts();
+            }
+        }
+
+        // Renderizar publicaciones
+        function renderPosts() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = '';
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <img src="/public/IMG/icon-user-black.png" alt="Sub Icon" class="sub-icon">
+                        <span style="font-weight: bold; margin-right: 4px;">r/${post.community}</span>
+                        <span style="color: #818384; font-size: 12px;">• Publicado por u/${post.author} ${new Date(post.createdAt).toLocaleString()}</span>
+                    </div>
+                    <h2 class="post-title">${post.title}</h2>
+                    <p>${post.content}</p>
+                    ${post.imageUrl ? `<img src="${post.imageUrl}" alt="Post Image" class="post-image">` : ''}
+                    <div class="post-footer">
+                        <div class="vote-buttons">
+                            <button class="vote-button" onclick="vote(${post.id}, 1)">⬆️</button>
+                            <span id="votes-${post.id}">${post.votes}</span>
+                            <button class="vote-button" onclick="vote(${post.id}, -1)">⬇️</button>
+                        </div>
+                        <button class="nav-button" onclick="toggleComments(${post.id})">💬 ${post.comments.length} Comentarios</button>
+                    </div>
+                    <div id="comments-${post.id}" class="comments-section" style="display: none;">
+                        <input type="text" placeholder="Añadir un comentario..." onkeypress="if(event.key === 'Enter') addComment(${post.id}, this.value)">
+                        ${post.comments.map(comment => `
+                            <div class="comment">
+                                <span style="font-weight: bold;">u/${comment.author}</span> - ${new Date(comment.createdAt).toLocaleString()}
+                                <p>${comment.content}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                mainContent.appendChild(postElement);
+            });
+        }
+
+        // Mostrar/ocultar comentarios
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Renderizar comunidades en la barra lateral
+        function renderCommunities() {
+            const communityList = document.getElementById('communityList');
+            communityList.innerHTML = '';
+            communities.forEach(community => {
+                const communityItem = document.createElement('div');
+                communityItem.className = 'sidebar-item';
+                communityItem.innerText = community.name;
+                communityList.appendChild(communityItem);
+            });
+        }
+
+        // Lógica de formularios
+        document.getElementById('createPostForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = e.target.postTitle.value;
+            const content = e.target.postContent.value;
+            const imageUrl = e.target.postImage.value;
+            createPost(title, content, imageUrl);
+            toggleModal('createPostModal');
+            e.target.reset();
+        });
+
+        document.getElementById('createCommunityForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = e.target.communityName.value;
+            const description = e.target.communityDescription.value;
+            createCommunity(name, description);
+            toggleModal('createCommunityModal');
+            e.target.reset();
+        });
+
+        // Inicializar datos
+        renderPosts();
+        renderCommunities();
+    </script>
+</body>
+
+</html>
